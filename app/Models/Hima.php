@@ -12,6 +12,9 @@ class Hima extends Model
         'university',
         'description',
         'is_active',
+        'plan',
+        'payment_status',
+        'trial_expires_at',
     ];
 
     protected $casts = [
@@ -21,5 +24,10 @@ class Hima extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_user_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

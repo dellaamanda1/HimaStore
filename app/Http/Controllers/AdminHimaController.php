@@ -14,8 +14,17 @@ class AdminHimaController extends Controller
         return view('admin.hima_index', compact('pending', 'active'));
     }
 
+    /**
+     * Admin approve:
+     * - Trial: boleh langsung approve
+     * - Subscription: harus payment_status = verified
+     */
     public function approve(Hima $hima)
     {
+        if ($hima->plan === 'subscription' && $hima->payment_status !== 'verified') {
+            return back()->with('status', 'Gagal approve: Subscription belum VERIFIED. (Status sekarang: '.$hima->payment_status.')');
+        }
+
         $hima->update(['is_active' => true]);
 
         $owner = $hima->owner;
@@ -23,5 +32,21 @@ class AdminHimaController extends Controller
         $owner->save();
 
         return back()->with('status', 'HIMA approved. User sekarang role = hima.');
+    }
+
+    /**
+     * Admin verifikasi pembayaran subscription (simulasi)
+     */
+    public function verifyPayment(Hima $hima)
+    {
+        if ($hima->plan !== 'subscription') {
+            return back()->with('status', 'Ini bukan subscription.');
+        }
+
+        $hima->update([
+            'payment_status' => 'verified',
+        ]);
+
+        return back()->with('status', 'Pembayaran subscription VERIFIED. Sekarang bisa di-approve.');
     }
 }
