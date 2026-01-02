@@ -121,7 +121,7 @@
                         </a>
                         <a href="#kategori"
                            class="px-5 py-3 rounded-2xl bg-white/10 border border-white/10 text-white hover:bg-white/15 transition">
-                            Lihat Kategori
+                            Lihat Kategori Populer
                         </a>
                     </div>
 
@@ -158,14 +158,6 @@
                                 <p class="text-white/60 text-sm">Produk pilihan terbaik</p>
                             </div>
                         @endforeach
-
-                        <a href="{{ route('shop') }}"
-                           class="block text-center mt-4 px-5 py-3 rounded-2xl bg-white/10 border border-white/10 text-white hover:bg-white/15 transition">
-                            Explore Semua Produk →
-                        </a>
-                    </div>
-                </div>
-            </div>
 
             <!-- KATEGORI -->
             <section id="kategori" class="mt-16">
