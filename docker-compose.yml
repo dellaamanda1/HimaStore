@@ -3,15 +3,18 @@ services:
     build: .
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
       APP_ENV: local
       APP_DEBUG: "true"
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: himastore_db
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      # Kalau kamu mau paksa DB via docker, boleh uncomment ini:
+      # DB_CONNECTION: mysql
+      # DB_HOST: db
+      # DB_PORT: 3306
+      # DB_DATABASE: himastore_db
+      # DB_USERNAME: root
+      # DB_PASSWORD: root
     depends_on:
       - db
 
@@ -21,7 +24,8 @@ services:
       MYSQL_DATABASE: himastore_db
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3307:3306"
+      # host port bisa diganti dari Jenkins: DB_HOST_PORT=3310 misalnya
+      - "${DB_HOST_PORT:-3307}:3306"
     volumes:
       - dbdata:/var/lib/mysql
 
